@@ -1,0 +1,11 @@
+Z:\NT106.L21\Prorject_EndTerm\paint-clone-c-sharp\Server\bin\Debug\Server.exe.config
+Z:\NT106.L21\Prorject_EndTerm\paint-clone-c-sharp\Server\bin\Debug\Server.exe
+Z:\NT106.L21\Prorject_EndTerm\paint-clone-c-sharp\Server\bin\Debug\Server.pdb
+Z:\NT106.L21\Prorject_EndTerm\paint-clone-c-sharp\Server\obj\Debug\Server.csprojAssemblyReference.cache
+Z:\NT106.L21\Prorject_EndTerm\paint-clone-c-sharp\Server\obj\Debug\paint_clone.Server.resources
+Z:\NT106.L21\Prorject_EndTerm\paint-clone-c-sharp\Server\obj\Debug\Server.Properties.Resources.resources
+Z:\NT106.L21\Prorject_EndTerm\paint-clone-c-sharp\Server\obj\Debug\Server.csproj.GenerateResource.cache
+Z:\NT106.L21\Prorject_EndTerm\paint-clone-c-sharp\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
+Z:\NT106.L21\Prorject_EndTerm\paint-clone-c-sharp\Server\obj\Debug\Server.exe
+Z:\NT106.L21\Prorject_EndTerm\paint-clone-c-sharp\Server\obj\Debug\Server.pdb
+Z:\NT106.L21\Prorject_EndTerm\paint-clone-c-sharp\Server\obj\Debug\Server.Form2.resources
