@@ -392,13 +392,13 @@ namespace Server
                     Client.Receive(data);
 
                     Image x = (Image)Deserialize(data);
-                    ShowImage(x);
+                    //ShowImage(x);
                   
                     foreach (Socket item in clientList)
                     {
                         if (item != null && item != Client)
                         {
-                            Send(item);
+                            item.Send(Serialize(x));
                         }
                     }
                    
@@ -414,9 +414,10 @@ namespace Server
 
         void ShowImage(Image x)
         {
+            g = Graphics.FromImage(x);
             mainPicture.Image = x;
             undoRedoList.Add(mainPicture.Image);
-            g = Graphics.FromImage(mainPicture.Image);
+            
         }
         byte[] Serialize(object obj)
         {
