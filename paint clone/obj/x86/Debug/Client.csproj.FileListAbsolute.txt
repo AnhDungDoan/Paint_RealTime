@@ -6,3 +6,5 @@ Z:\NT106.L21\Prorject_EndTerm\paint-clone-c-sharp\paint clone\obj\x86\Debug\Clie
 Z:\NT106.L21\Prorject_EndTerm\paint-clone-c-sharp\paint clone\obj\x86\Debug\Client.csproj.CoreCompileInputs.cache
 Z:\NT106.L21\Prorject_EndTerm\paint-clone-c-sharp\paint clone\obj\x86\Debug\paint clone.exe
 Z:\NT106.L21\Prorject_EndTerm\paint-clone-c-sharp\paint clone\obj\x86\Debug\paint clone.pdb
+Z:\NT106.L21\Prorject_EndTerm\paint-clone-c-sharp\paint clone\bin\Debug\paint clone.exe
+Z:\NT106.L21\Prorject_EndTerm\paint-clone-c-sharp\paint clone\bin\Debug\paint clone.pdb

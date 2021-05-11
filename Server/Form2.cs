@@ -28,7 +28,7 @@ namespace Server
         private Point lastPoint = Point.Empty;
         private bool isMouseDown = new Boolean();
 
-        private List<Bitmap> undoRedoList = new List<Bitmap>();
+        private List<Image> undoRedoList = new List<Image>();
         protected int counter = 0;
 
         public Form2()
@@ -38,12 +38,12 @@ namespace Server
             CheckForIllegalCrossThreadCalls = false;
 
             Connect();
-            canvasSizeLabel.Text = "Canvas Size: " + pictureBox1.Size.Width + "x" + pictureBox1.Size.Height;
+            canvasSizeLabel.Text = "Canvas Size: " + mainPicture.Size.Width + "x" + mainPicture.Size.Height;
             zoomStatusLabel.Text = "Zoom: " + trackBar1.Value + "x";
 
-            canvas = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            pictureBox1.Image = canvas;
-            g = Graphics.FromImage(pictureBox1.Image);
+            canvas = new Bitmap(mainPicture.Width, mainPicture.Height);
+            mainPicture.Image = canvas;
+            g = Graphics.FromImage(mainPicture.Image);
             undoRedoList.Add(canvas);
         }
         #region colors
@@ -54,7 +54,7 @@ namespace Server
             currentColor = colorDialog1.Color;
             currentColorBox.BackColor = currentColor;
         }
-        private void Form1_Load(object sender, EventArgs e)
+        private void Form2_Load(object sender, EventArgs e)
         {
             currentColor = Color.Black;//default
             currentColorBox.BackColor = currentColor;
@@ -89,7 +89,6 @@ namespace Server
             currentColor = brownBox.BackColor;
             currentColorBox.BackColor = currentColor;
         }
-
         private void redBox_Click(object sender, EventArgs e)
         {
             currentColor = redBox.BackColor;
@@ -232,13 +231,13 @@ namespace Server
                     }
                 }
             }
-            pictureBox1.Invalidate();
+            mainPicture.Refresh();
         }
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
             lastPoint = e.Location;
             isMouseDown = false;
-            //for undo, one pen stroke = 1 complete action
+            
             undoRedoList.Add(canvas);
             if (undoRedoList.Count < 1)
             {
@@ -249,9 +248,10 @@ namespace Server
                 undoButton.Enabled = true;
             }
 
+            // send Image for each other
             foreach (Socket item in clientList)
             {
-                item.Send(Serialize(canvas));
+                Send(item);
             }
 
         }
@@ -307,7 +307,7 @@ namespace Server
                 }
 
             }
-            pictureBox1.Refresh();
+            mainPicture.Refresh();
             return;
         }
         #endregion
@@ -315,31 +315,26 @@ namespace Server
         private void clearCanvasMenuItem_Click(object sender, EventArgs e)
         {
             g.Clear(Color.White);
-            pictureBox1.Invalidate();
+            mainPicture.Invalidate();
         }
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             zoomStatusLabel.Text = "Zoom: " + trackBar1.Value + "x";
         }
         #endregion
-
         #region undo/redo
+        private void undoButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void redoButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
         #endregion
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button10_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-
-        }
+        #region Connect LAN 
 
         IPEndPoint IP;
         Socket server;
@@ -349,7 +344,7 @@ namespace Server
         {
             clientList = new List<Socket>();
             //IP: server address
-            IP = new IPEndPoint(IPAddress.Any, 9000);
+            IP = new IPEndPoint(IPAddress.Any, 9900);
             server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
 
             server.Bind(IP);
@@ -372,7 +367,7 @@ namespace Server
                 catch
                 {
                     //IP: server address
-                    IP = new IPEndPoint(IPAddress.Any, 9000);
+                    IP = new IPEndPoint(IPAddress.Any, 9900);
                     server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
 
                 }
@@ -382,10 +377,9 @@ namespace Server
             Listen.IsBackground = true;
             Listen.Start();
         }
-
-
-        void Send()
+        void Send(Socket Client)
         {
+            Client.Send(Serialize(mainPicture.Image));
         }
         void Receive(object obj)
         {
@@ -399,6 +393,15 @@ namespace Server
 
                     Image x = (Image)Deserialize(data);
                     ShowImage(x);
+                  
+                    foreach (Socket item in clientList)
+                    {
+                        if (item != null && item != Client)
+                        {
+                            Send(item);
+                        }
+                    }
+                   
                 }
             }
             catch
@@ -408,9 +411,12 @@ namespace Server
             }
 
         }
+
         void ShowImage(Image x)
         {
-            pictureBox1.Image = x;
+            mainPicture.Image = x;
+            undoRedoList.Add(mainPicture.Image);
+            g = Graphics.FromImage(mainPicture.Image);
         }
         byte[] Serialize(object obj)
         {
@@ -428,6 +434,7 @@ namespace Server
             return formatterr.Deserialize(stream);
         }
 
+        #endregion  
         private void Server_FormClosed(object sender, FormClosedEventArgs e)
         {
             Close();

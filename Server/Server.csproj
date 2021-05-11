@@ -74,6 +74,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -98,6 +99,7 @@
     <Content Include="Resources\Imagetools-Rotation-cw-icon.png" />
     <Content Include="Resources\Paint-icon.png" />
     <Content Include="Resources\Pen-Blue-icon.png" />
+    <None Include="Resources\Pen-Blue-icon1.png" />
     <Content Include="Resources\select-icon.png" />
     <Content Include="Resources\Text-Formatting-Rename-icon.png" />
   </ItemGroup>

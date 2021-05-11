@@ -29,7 +29,7 @@ namespace paint_clone
         private Point lastPoint = Point.Empty;
         private bool isMouseDown = new Boolean();
 
-        private List<Bitmap> undoRedoList = new List<Bitmap>();
+        private List<Image> undoRedoList = new List<Image>();
         protected int counter = 0;
         
         public MainForm()
@@ -45,7 +45,7 @@ namespace paint_clone
             canvas = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             pictureBox1.Image = canvas;
             g = Graphics.FromImage(pictureBox1.Image);
-            undoRedoList.Add(canvas);
+            undoRedoList.Add(pictureBox1.Image);
         }
         #region colors
         [Description("The functions below control the colours of anything drawn")] 
@@ -233,14 +233,14 @@ namespace paint_clone
                     }
                 }
             }
-            pictureBox1.Invalidate();
+            pictureBox1.Refresh();
         }
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
             lastPoint = e.Location;
             isMouseDown = false;
             //for undo, one pen stroke = 1 complete action
-            undoRedoList.Add(canvas);
+            undoRedoList.Add(pictureBox1.Image);
             if (undoRedoList.Count < 1)
             {
                 undoButton.Enabled = false;
@@ -250,7 +250,7 @@ namespace paint_clone
                 undoButton.Enabled = true;
             }
 
-            Client.Send(Serialize(canvas));
+            Send();  
         }
         #endregion
         #region fill functionality
@@ -335,33 +335,14 @@ namespace paint_clone
         }
         #endregion
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button10_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
+        #region Connect LAN
         IPEndPoint IP;
         Socket Client;
 
         void Connect()
         {
             //IP: server address
-            IP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9000);
+            IP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9900);
             Client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
 
             try
@@ -378,9 +359,9 @@ namespace paint_clone
             listener.IsBackground = true;
             listener.Start();
         }
-
         void Send()
         {
+            Client.Send(Serialize(pictureBox1.Image));
         }
         void Receive()
         {
@@ -392,7 +373,7 @@ namespace paint_clone
                     Client.Receive(data);
 
                     Image x = (Image)Deserialize(data);
-                    ShowImage(x);
+                    ShowImage(x);                   
                 }
             }
             catch
@@ -404,6 +385,8 @@ namespace paint_clone
         void ShowImage(Image x)
         {
             pictureBox1.Image = x;
+            undoRedoList.Add(pictureBox1.Image);
+            g = Graphics.FromImage(pictureBox1.Image);
         }
         byte[] Serialize(object obj)
         {
@@ -420,16 +403,12 @@ namespace paint_clone
 
             return formatterr.Deserialize(stream);
         }
-
+        #endregion
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Close();
         }
 
-        private void penRadioBtn_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 
     

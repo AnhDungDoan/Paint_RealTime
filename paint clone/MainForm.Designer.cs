@@ -135,7 +135,6 @@
             this.menuStrip1.Size = new System.Drawing.Size(959, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // fileToolStripMenuItem
             // 
@@ -590,7 +589,6 @@
             this.button10.Size = new System.Drawing.Size(30, 30);
             this.button10.TabIndex = 16;
             this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // paintbrushRadioBtn
             // 
@@ -649,7 +647,7 @@
             this.penRadioBtn.TabStop = true;
             this.penRadioBtn.Text = "       \r\n       ";
             this.penRadioBtn.UseVisualStyleBackColor = true;
-            this.penRadioBtn.CheckedChanged += new System.EventHandler(this.penRadioBtn_CheckedChanged);
+           
             // 
             // button7
             // 
@@ -660,7 +658,6 @@
             this.button7.Size = new System.Drawing.Size(30, 30);
             this.button7.TabIndex = 13;
             this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // label3
             // 
@@ -774,7 +771,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
