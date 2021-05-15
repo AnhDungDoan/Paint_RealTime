@@ -647,7 +647,6 @@
             this.penRadioBtn.TabStop = true;
             this.penRadioBtn.Text = "       \r\n       ";
             this.penRadioBtn.UseVisualStyleBackColor = true;
-           
             // 
             // button7
             // 
@@ -793,7 +792,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
-            this.Text = "Canvas - a paint clone in C#.NET";
+            this.Text = "Client";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);

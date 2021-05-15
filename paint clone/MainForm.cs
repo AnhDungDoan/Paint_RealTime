@@ -239,7 +239,6 @@ namespace paint_clone
         {
             lastPoint = e.Location;
             isMouseDown = false;
-            //for undo, one pen stroke = 1 complete action
             undoRedoList.Add(pictureBox1.Image);
             if (undoRedoList.Count < 1)
             {
@@ -325,13 +324,19 @@ namespace paint_clone
         private void undoButton_Click(object sender, EventArgs e)
         {
             //when we undo, we go backwards in the list, so counter--;
-            pictureBox1.Image = null;
-            pictureBox1.Image = undoRedoList[counter--];//YOU ARE HERE
-            
+            if (counter > 0)
+                undoButton.Enabled = true;
+
+            Image x = undoRedoList[--counter];
+            ShowImage(x);
         }
         private void redoButton_Click(object sender, EventArgs e)
         {
-            
+            if (counter <= 0)
+                redoButton.Enabled = true;
+
+            Image x = undoRedoList[++counter];
+            ShowImage(x);
         }
         #endregion
 
@@ -352,6 +357,7 @@ namespace paint_clone
             catch
             {
                 MessageBox.Show("Can't connect", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Environment.Exit(0);
                 return;
             }
 
